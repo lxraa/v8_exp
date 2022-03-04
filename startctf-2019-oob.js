@@ -92,8 +92,7 @@ fake_array_address = addressOf(fake_array);
 console.log("[*] fake array address:0x"+hex(fake_array_address));
 
 fake_obj_array = fakeObj(fake_array_address);
-%DebugPrint(fake_obj_array);
-%SystemBreak();
+
 wasmInstance_addr = addressOf(wasmInstance);
 
 
